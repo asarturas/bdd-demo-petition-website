@@ -2,7 +2,7 @@
 
 ##Installation Instructions
 
-# Install dependencies in chef: `$ cd tools/chef && librarian-chef install`
-# Build virtual machine: `$ cd ../vagrant && vagrant up`
-# Switch to virtual machine shell: `$ vagrant ssh`
-# Install dependencies in composer: `$ composer install`
+1. Install dependencies in chef: `$ cd tools/chef && librarian-chef install`
+1. Build virtual machine: `$ cd ../vagrant && vagrant up`
+1. Switch to virtual machine shell: `$ vagrant ssh`
+1. Install dependencies in composer: `$ composer install`
