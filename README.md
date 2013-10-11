@@ -1,7 +1,6 @@
-*Demo: Petition Website*
+#Demo Project: Petition Website
 
-Installation Instructions
-=========================
+##Installation Instructions
 
 # Install dependencies in chef: `$ cd tools/chef && librarian-chef install`
 # Build virtual machine: `$ cd ../vagrant && vagrant up`
