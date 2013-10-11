@@ -41,7 +41,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
             :site_name => "demo-petition-website",
             :server_name => "demo-petition-website.development.local",
             :server_aliases => ["demo-petition-website.development.local"],
-            :docroot => "/mnt/demo-petition-website",
+            :docroot => "/mnt/demo-petition-website/web",
             :allow_override => "All"
         }
      }
