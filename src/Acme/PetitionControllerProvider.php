@@ -16,12 +16,13 @@ class PetitionControllerProvider implements ControllerProviderInterface
         $controller = new \Acme\PetitionController($app['twig'], $app['db']);
 
         $controllers->get('/', array($controller, 'indexAction'));
-        $controllers->get(
+        $controllers->post(
             '/sign',
             function(Request $request) use ($controller) {
                 return $controller->signAction($request->get('name'));
             }
         );
+        $controllers->get('/thankyou', array($controller, 'thankyouAction'));
 
         return $controllers;
     }

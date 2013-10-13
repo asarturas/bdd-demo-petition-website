@@ -2,6 +2,8 @@
 
 namespace Acme;
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
 class PetitionController
 {
     const PETITION_TITLE = 'Doughnuts should be banned because they are too fascinating';
@@ -23,7 +25,12 @@ class PetitionController
     public function signAction($name)
     {
         $this->dbConn->insert('signers', array('name' => $name));
+        return new RedirectResponse('/thankyou');
+    }
+
+    public function thankyouAction()
+    {
         $signers = $this->dbConn->fetchAll('SELECT * FROM `signers`');
-        return $this->twig->render('sign.html.twig', array('signers' => $signers));
+        return $this->twig->render('thankyou.html.twig', array('signers' => $signers));
     }
 }

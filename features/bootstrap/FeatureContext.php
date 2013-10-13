@@ -76,7 +76,7 @@ class FeatureContext extends MinkContext
         foreach ($table->getHash() as $row) {
             $conn->insert('signers', $row);
         }
-        
+
         $numberOfSigners = $conn->fetchColumn("SELECT COUNT(1) AS `count` FROM `signers`");
         if (2 != $numberOfSigners) {
             throw new \RuntimeException("Expected to find two signers, but {$numberOfSigners} found.");

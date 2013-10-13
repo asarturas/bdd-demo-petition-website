@@ -19,16 +19,21 @@ class PetitionControllerSpec extends ObjectBehavior
         $this->indexAction()->shouldBeString();
     }
 
-    function its_sign_action_returns_a_string()
+    function its_sign_action_returns_redirect_response()
     {
-        $this->signAction('Chuck Norris')->shouldBeString();
+        $this->signAction('Chuck Norris')->shouldHaveType('\Symfony\Component\HttpFoundation\RedirectResponse');
     }
 
-    function its_sign_action_adds_signer_to_database_and_fetches_all_signers(\Doctrine\DBAL\Connection $conn)
+    function its_sign_action_adds_signer_to_database(\Doctrine\DBAL\Connection $conn)
     {
         $conn->insert('signers', Argument::type('array'))->shouldBeCalled();
-        $conn->fetchAll(Argument::type('string'))->shouldBeCalled();
         $this->signAction('Chuck Norris');
+    }
+
+    function its_thankyou_action_fetches_all_signers(\Doctrine\DBAL\Connection $conn)
+    {
+        $conn->fetchAll(Argument::type('string'))->shouldBeCalled();
+        $this->thankyouAction();
     }
 
 }
