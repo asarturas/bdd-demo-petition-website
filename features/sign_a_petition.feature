@@ -25,3 +25,8 @@ Feature: Sign a petition
       | Bruce Willis       |
       | Sylvester Stallone |
       | Chuck Norris       |
+
+  Scenario: sign without a name
+    Given I am on homepage
+    When I sign a petition as ""
+    Then I should see "No anonymous signers, please"

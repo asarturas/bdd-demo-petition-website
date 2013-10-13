@@ -24,6 +24,9 @@ class PetitionController
 
     public function signAction($name)
     {
+        if (empty($name)) {
+            return new RedirectResponse('/error');
+        }
         $this->dbConn->insert('signers', array('name' => $name));
         return new RedirectResponse('/thankyou');
     }
@@ -32,5 +35,10 @@ class PetitionController
     {
         $signers = $this->dbConn->fetchAll('SELECT * FROM `signers`');
         return $this->twig->render('thankyou.html.twig', array('signers' => $signers));
+    }
+
+    public function errorAction()
+    {
+        return $this->twig->render('error.html.twig');
     }
 }

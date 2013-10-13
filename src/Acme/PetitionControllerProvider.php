@@ -23,6 +23,7 @@ class PetitionControllerProvider implements ControllerProviderInterface
             }
         );
         $controllers->get('/thankyou', array($controller, 'thankyouAction'));
+        $controllers->get('/error', array($controller, 'errorAction'));
 
         return $controllers;
     }

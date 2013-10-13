@@ -9,7 +9,7 @@ class PetitionControllerSpec extends ObjectBehavior
 {
     function let(\Twig_Environment $twig, \Doctrine\DBAL\Connection $conn)
     {
-        $twig->render(Argument::any(), Argument::type('array'))->willReturn('');
+        $twig->render(Argument::any(), Argument::any())->willReturn('');
 
         $this->beConstructedWith($twig, $conn);
     }
@@ -19,9 +19,11 @@ class PetitionControllerSpec extends ObjectBehavior
         $this->indexAction()->shouldBeString();
     }
 
-    function its_sign_action_returns_redirect_response()
+    function its_sign_action_redirects_to_thankyou_page_on_success()
     {
-        $this->signAction('Chuck Norris')->shouldHaveType('\Symfony\Component\HttpFoundation\RedirectResponse');
+        $response = $this->signAction('Chuck Norris');
+        $response->shouldHaveType('\Symfony\Component\HttpFoundation\RedirectResponse');
+        $response->getTargetUrl()->shouldBe('/thankyou');
     }
 
     function its_sign_action_adds_signer_to_database(\Doctrine\DBAL\Connection $conn)
@@ -34,6 +36,18 @@ class PetitionControllerSpec extends ObjectBehavior
     {
         $conn->fetchAll(Argument::type('string'))->shouldBeCalled();
         $this->thankyouAction();
+    }
+
+    function its_sign_action_redirects_to_error_page_when_empty_name_is_supplied()
+    {
+        $response = $this->signAction('');
+        $response->shouldHaveType('\Symfony\Component\HttpFoundation\RedirectResponse');
+        $response->getTargetUrl()->shouldBe('/error');
+    }
+
+    function its_error_action_returns_a_string()
+    {
+        $this->errorAction()->shouldBeString();
     }
 
 }
