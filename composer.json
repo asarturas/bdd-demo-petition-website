@@ -4,7 +4,10 @@
     },
     "require-dev": {
         "phpspec/phpspec": "2.0.*@dev",
-        "behat/behat": "2.4.*@stable"
+        "behat/behat": "2.4.*@stable",
+        "behat/mink-extension": "*",
+        "behat/mink-goutte-driver": "1.0.*@dev",
+        "twig/twig": ">=1.8,<2.0-dev"
     },
     "config": {
         "bin-dir": "bin"
