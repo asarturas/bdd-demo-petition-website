@@ -7,6 +7,7 @@ use Behat\Behat\Context\ClosuredContextInterface,
     Behat\Behat\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
+use Doctrine\DBAL\DriverManager;
 
 /**
  * Features context.
@@ -46,9 +47,9 @@ class FeatureContext extends MinkContext
     }
 
     /**
-     * @When /^I sign petition as "([^"]*)"$/
+     * @When /^I sign a petition as "([^"]*)"$/
      */
-    public function iSignPetitionAs($name)
+    public function iSignAPetitionAs($name)
     {
         $page = $this->getSession()->getPage();
 
@@ -61,22 +62,34 @@ class FeatureContext extends MinkContext
      */
     public function theFollowingPeopleAlreadySignedPetition(TableNode $table)
     {
-        throw new PendingException();
+        $config = new \Doctrine\DBAL\Configuration();
+        $connectionParams = array(
+            'driver'   => 'pdo_sqlite',
+            'path'     => __DIR__.'/../../res/app.db',
+        );
+        /* @var $conn \Doctrine\DBAL\Connection */
+        $conn = DriverManager::getConnection($connectionParams, $config);
+
+        $conn->executeQuery("DROP TABLE IF EXISTS `signers`");
+        $conn->executeQuery("CREATE TABLE `signers` (`name` TEXT NOT NULL)");
+
+        foreach ($table->getHash() as $row) {
+            $conn->insert('signers', $row);
+        }
+        
+        $numberOfSigners = $conn->fetchColumn("SELECT COUNT(1) AS `count` FROM `signers`");
+        if (2 != $numberOfSigners) {
+            throw new \RuntimeException("Expected to find two signers, but {$numberOfSigners} found.");
+        }
     }
 
     /**
-     * @When /^I sign a petition as "([^"]*)"$/
+     * @Then /^I should see these signers:$/
      */
-    public function iSignAPetitionAs($arg1)
+    public function iShouldSeeTheseSigners(TableNode $table)
     {
-        throw new PendingException();
-    }
-
-    /**
-     * @Then /^I should see "([^"]*)" in the signers list$/
-     */
-    public function iShouldSeeInTheSignersList($arg1)
-    {
-        throw new PendingException();
+        foreach ($table->getHash() as $row) {
+            $this->assertPageContainsText($row['name']);
+        }
     }
 }

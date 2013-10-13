@@ -1,4 +1,9 @@
 {% extends "base.html.twig" %}
 {% block content %}
 <h1>Thank you for your support</h1>
+    <ul>
+    {% for signer in signers %}
+        <li>{{ signer.name }}</li>
+    {% endfor %}
+    </ul>
 {% endblock %}

@@ -10,7 +10,7 @@ Feature: Sign a petition
 
   Scenario: sign a petition
     Given I am on homepage
-    When I sign petition as "Chuck Norris"
+    When I sign a petition as "Chuck Norris"
     Then I should see "Thank you for your support"
 
   Scenario: view signers on petition page
@@ -20,4 +20,8 @@ Feature: Sign a petition
       | Bruce Willis       |
       | Sylvester Stallone |
     When I sign a petition as "Chuck Norris"
-    Then I should see "Chuck Norris" in the signers list
+    Then I should see these signers:
+      | name               |
+      | Bruce Willis       |
+      | Sylvester Stallone |
+      | Chuck Norris       |
