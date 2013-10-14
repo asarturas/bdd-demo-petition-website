@@ -18,4 +18,10 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
 
 $app->mount('/', new Acme\PetitionControllerProvider());
 
+$app->after(
+    function (\Symfony\Component\HttpFoundation\Request $request, \Symfony\Component\HttpFoundation\Response $response) {
+        $response->headers->set('Content-Length', strlen($response->getContent()));
+    }
+);
+
 $app->run();
