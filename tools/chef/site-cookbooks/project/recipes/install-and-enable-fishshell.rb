@@ -1,4 +1,4 @@
-bash "remote_php_module_config_duplicates" do
+bash "install-fish-shell" do
   user "root"
   cwd "/"
   code <<-EOH

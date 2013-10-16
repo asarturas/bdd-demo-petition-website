@@ -13,6 +13,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
    config.vm.provision :chef_solo do |chef|
      chef.cookbooks_path = ["../chef/cookbooks", "../chef/site-cookbooks"]
+     chef.add_recipe "project::apt-get-update"
      chef.add_recipe "apache2"
      chef.add_recipe "mysql::server"
      chef.add_recipe "php"
@@ -28,6 +29,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
      chef.add_recipe "project"
      chef.add_recipe "project::remove-php-module-config-duplicates"
      chef.add_recipe "project::install-and-enable-fishshell"
+     chef.add_recipe "project::add-hosts-entry"
      chef.json = {
         :mysql_password => "root",
         :mysql => {
