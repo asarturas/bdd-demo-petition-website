@@ -6,7 +6,7 @@
 1. `vagrant` is installed (tested with v.1.3.4)
    (`http://downloads.vagrantup.com`)
 1. `vagrant-omnibus` extension is installed (tested with v.1.1.1)
-   (`$ vagrant plugin install omnibus`)
+   (`$ vagrant plugin install vagrant-omnibus`)
 
 ##Installation Instructions
 
